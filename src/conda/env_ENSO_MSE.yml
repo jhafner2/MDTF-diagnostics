@@ -3,10 +3,14 @@ channels:
 - conda-forge # NOTE: critical to give highest priority to conda-forge
 - defaults
 dependencies:
-- python=2.7
+- python=3.7
+- numpy=1.19
+- scipy=1.5.2
+- netCDF4=1.5.4
+- cftime=1.2
+- xarray=0.16
+- matplotlib=3.3
 - subprocess32
-- numpy
-- scipy
 # - ncl=6.5 # has a font rendering issue fixed in 6.6
 # - openblas=0.3.4 # otherwise ncl 6.5 installs but doesn't function on macs
 - ncl=6.6.2
