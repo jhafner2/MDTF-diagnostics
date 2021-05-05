@@ -20,9 +20,13 @@ from util import check_required_dirs
 ###  check  the input data in inputdata/model  directories DATADIR + mon
 ## 3D
 
+<<<<<<< HEAD
 vvar = [ "zg", "ua", "va",  \
          "ta", "qa", "omega", \
          "pr", "ts", "hfss", \
+=======
+vvar = [ "zg", "ua", "va",  "ta", "hus", "wap", "pr", "ts", "hfss", \
+>>>>>>> jan/develop
          "hfls", "rsus", "rsds", \
          "rsdt", "rsut", "rlus", \
          "rlds", "rlut" ]

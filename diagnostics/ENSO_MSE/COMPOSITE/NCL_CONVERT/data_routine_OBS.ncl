@@ -31,7 +31,11 @@ begin
 ;;     2D  vars
        pr =  "pr" ;;  getenv("pr_var")
        ts = "ts" ;;   getenv("ts_var")
+<<<<<<< HEAD
        pr_conversion = "pr_conversion_factor" ;;    getenv("pr_conversion_factor")
+=======
+       pr_conversion = 1. ;;;  "pr_conversion_factor" ;;    getenv("pr_conversion_factor")
+>>>>>>> jan/develop
        hfss = "hfss" ;; getenv("hfss_var")
        hfls = "hfls" ;;  getenv("hfls_var")
 

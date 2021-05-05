@@ -9,7 +9,7 @@
 ; load "$NCARG_ROOT/lib/ncarg/nclscripts/csm/shea_util.ncl"
 ;load "$POD_HOME/shared/gsnColorRange.ncl"
 
-begin 
+begin
 
 ;; select the  cmin, cmax, cint
    cmin = -1.0 ;; -1.2 ; min(datain)
@@ -22,7 +22,7 @@ begin
    variables = (/ "pr",  "sw", "lw", "hfls", "hfss" /)
    varinames = (/ "PRECIP" , "SW~B~net~N", "LW~B~net~N", "LHF", "SHF" /)
 
-;;  read  in the data 
+;;  read  in the data
 
       obsdir  = getenv("OBS_DATA") +"/DATA/"
       outdir2   = getenv("ENSO_MSE_WKDIR")+"/obs/"
@@ -33,11 +33,11 @@ begin
       parameter_name = varcode + "/shared/parameters.txt"
 
       nameclima = obsdir +  "/netCDF/"
-      namein  = obsdir + "/netCDF/"  
+      namein  = obsdir + "/netCDF/"
 
-       nameout = outdir2 + "/PS/correlation" 
+       nameout = outdir2 + "/PS/correlation"
 
-       maintitle = "NINO3.4 SST vs "  
+       maintitle = "NINO3.4 SST vs "
 
       season = "XXX"
       undef2 = 1.1E+20
@@ -49,17 +49,17 @@ begin
        xlon2 = 360
        xcenter  = (xlon1 + xlon2)/2
 
-;;   
+;;
     do iv = 0, 4
 
-    variable = variables(iv) ;;;;    
+    variable = variables(iv) ;;;;
 
-     colormap = "BlueWhiteOrangeRed" 
-;;  the title 
+     colormap = "BlueWhiteOrangeRed"
+;;  the title
 
-   namein1 = namein + "/CORR_" + variable + ".nc"  
+   namein1 = namein + "/CORR_" + variable + ".nc"
 
-   nameout12 = nameout + "_" + variables2(iv) 
+   nameout12 = nameout + "_" + variables2(iv)
 ;;   read in the data
      fin1 = addfile( namein1, "r")
 
@@ -85,13 +85,13 @@ begin
  res = True
 ;;   res@gsnMaximize  = True                        ; maximize plot in frame
 
-  res@mpMinLonF              =  xlon1 
+  res@mpMinLonF              =  xlon1
   res@mpMaxLonF              =  xlon2
   res@mpCenterLonF           = xcenter     ; This is necessary to get the correct map
 
 
  res@cnFillOn              = True
- res@cnFillMode            = "CellFill"
+ res@cnFillMode            = "AreaFill"
  res@cnLinesOn             = False
  res@cnLevelSelectionMode  = "ManualLevels"
 
@@ -104,7 +104,7 @@ begin
 
  res@gsnMaximize         = True
 
-;;  title 
+;;  title
   res@tiMainFontHeightF = 0.025
   res@tiMainFont = "helvetica"
 
@@ -139,14 +139,14 @@ begin
      dy2 = 0.0
      dx2 = 0.3
 
-     label4 = "Months/Season= " +  season 
+     label4 = "Months/Season= " +  season
 
      gsn_text_ndc (wks, label4, xs1, ys1, txres2)
-;;;;;    
+;;;;;
 
 	plot = gsn_csm_contour_map(wks, datain1, res)
 
-;;  frame(wks)      
+;;  frame(wks)
 
   end do  ;  over variables
 end

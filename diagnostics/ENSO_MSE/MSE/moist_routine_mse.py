@@ -2,7 +2,7 @@ import numpy as np
 
 '''
     routine to calculate the MSE and its vertical integral
-    
+
     INPUT: 3 dimensional atmospheric variables:
     dimensions:  IMAX, JMAX, ZMAX
     variables : HGT: geopotential height [m]
@@ -27,13 +27,13 @@ def moisture_energy(imax, jmax, zmax, plev, hgt, ta, hus):
     # various constants
     lh = 2.5e+6
     cp = 1004.0
-    
+
     rd = 287.0
     gg = 9.82
 
-    # fill with undef first 
+    # fill with undef first
     mse3 = cp * ta + gg * hgt + lh * hus
- 
+
     plev = plev.reshape((1,1,zmax), order='F')
     rho = plev * 100./(rd * ta)
 
@@ -43,8 +43,7 @@ def moisture_energy(imax, jmax, zmax, plev, hgt, ta, hus):
 
     dz = 0.5 * (hgt[:, :, k2] - hgt[:, :, k1])
 
-
     mse1 = np.sum(rho * mse3 * dz, axis=2)
- 
+
 ##    print("moisture_energy processing end")
     return mse1, mse3

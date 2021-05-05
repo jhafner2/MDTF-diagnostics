@@ -138,7 +138,11 @@ begin
 
 
  res@cnFillOn              = True
+<<<<<<< HEAD
  res@cnFillMode            = "CellFill"
+=======
+ res@cnFillMode            = "AreaFill"
+>>>>>>> jan/develop
  res@cnLinesOn             = False
  res@cnLevelSelectionMode  = "ManualLevels"
 

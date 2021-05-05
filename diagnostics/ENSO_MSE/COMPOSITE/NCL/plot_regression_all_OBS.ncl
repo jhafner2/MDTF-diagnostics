@@ -9,7 +9,7 @@
 ; load "$NCARG_ROOT/lib/ncarg/nclscripts/csm/shea_util.ncl"
 ; load "$POD_HOME/shared/gsnColorRange.ncl"
 
-begin 
+begin
 
 ;; select the  cmin, cmax, cint
    cmin = (/  -2.8,  -2.4, -22.5, -18,  -12 /) ; min(datain)
@@ -24,10 +24,10 @@ begin
    varunits =  (/ "[mm/day]/[deg. C]", "[W/m2]/[deg. C]", "[W/m2]/[deg. C]", "[W/m2]/[deg. C]", "[W/m2]/[deg. C]"  /)
 
 
-;;  read  in the data 
+;;  read  in the data
 
       obsdir  = getenv("OBS_DATA") +"/DATA/"
-      outdir2   = getenv("ENSO_MSE_WKDIR")+"/obs/"  
+      outdir2   = getenv("ENSO_MSE_WKDIR")+"/obs/"
       outdir   = getenv("ENSO_MSE_WKDIR_COMPOSITE")+"/obs/"  ; set in ENSO_MSE.py
       varcode  = getenv("POD_HOME")
       model =  " "   ;;;;   leave blank for observations  getenv( "CASENAME")
@@ -35,9 +35,9 @@ begin
       parameter_name = varcode + "/shared/parameters.txt"
 
       nameclima = obsdir +  "/netCDF/"
-      namein  = obsdir + "/netCDF/"  
+      namein  = obsdir + "/netCDF/"
 
-       nameout2 = outdir2 + "/PS/regression" 
+       nameout2 = outdir2 + "/PS/regression"
 
       maintitle = "NINO3.4 SST on "
 
@@ -51,20 +51,20 @@ begin
        xlon2 = 360
        xcenter  = (xlon1 + xlon2)/2
 
-;;;   read in various variables then  plot 
-;;   
+;;;   read in various variables then  plot
+;;
     do iv = 0, 4
 
-    variable = variables(iv) ;;;;    
+    variable = variables(iv) ;;;;
     variable2 = variables2(iv)
     units2 = varunits(iv)
 
-     colormap = "BlueWhiteOrangeRed" 
-;;  the title 
+     colormap = "BlueWhiteOrangeRed"
+;;  the title
 
-   namein1 = namein + "/REGRESS_" + variable2 + ".nc"  
+   namein1 = namein + "/REGRESS_" + variable2 + ".nc"
 
-   nameout12 = nameout2 + "_" + variable 
+   nameout12 = nameout2 + "_" + variable
 
      fin1 = addfile( namein1, "r")
 
@@ -89,28 +89,28 @@ begin
 
  res = True
 
-  res@mpMinLonF              =  xlon1 
+  res@mpMinLonF              =  xlon1
   res@mpMaxLonF              =  xlon2
   res@mpCenterLonF           = xcenter     ; This is necessary to get the correct map
 
   res@txFuncCode    = "~"
 
  res@cnFillOn              = True
- res@cnFillMode            = "CellFill"
+ res@cnFillMode            = "AreaFill"
  res@cnLinesOn             = False
  res@cnLevelSelectionMode  = "ManualLevels"
 
   res@cnFillOn             = True                  ; turn on color fill
   res@cnLinesOn            = False
 
-;  symMinMaxPlt ( datain1, clevs, False,res)  
+;  symMinMaxPlt ( datain1, clevs, False,res)
  res@cnMinLevelValF        = cmin(iv)
  res@cnMaxLevelValF        = cmax(iv)
  res@cnLevelSpacingF       = cint(iv)
 
  res@gsnMaximize         = True
 
-;;  title 
+;;  title
   res@tiMainFontHeightF = 0.025
   res@tiMainFont = "helvetica"
 

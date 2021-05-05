@@ -58,13 +58,13 @@
                      "dimensions": ["time", "lev", "lat", "lon"],
 			"freq": "mon"
 		},
-		"qa": {
+		"hus": {
                      "standard_name": "specific_humidity",
                      "units": "1",
                      "dimensions": ["time", "lev", "lat", "lon"],
 			"freq": "mon"
 		},
-		"omega": {
+		"wap": {
                      "standard_name": "lagrangian_tendency_of_air_pressure",
                      "units": "Pa s-1",
                      "dimensions": ["time", "lev", "lat", "lon"],

@@ -25,13 +25,13 @@ begin
        uav  = "ua" ;;  getenv("ua_var")
        vav  = "va" ;;  getenv("va_var")
        tav  = "ta" ;;  getenv("ta_var")
-       husv = "qa" ;;  getenv("qa_var")
-       wapv = "omega" ;;  getenv("omega_var")
+       husv = "hus" ;;  "qa" ;;  getenv("qa_var")
+       wapv = "wap" ;;  getenv("omega_var")
 
 ;;     2D  vars
        prv = "pr" ;;  getenv("pr_var")
        tsv = "ts" ;;  getenv("ts_var")
-       pr_conversionv = "pr_conversion_factor" ;;  getenv("pr_conversion_factor")
+       pr_conversionv =  1. ;;; "pr_conversion_factor" ;;  getenv("pr_conversion_factor")
        hfssv = "hfss" ;;  getenv("hfss_var")
        hflsv = "hfls" ;;  getenv("hfls_var")
 
@@ -343,14 +343,12 @@ begin
        filevardef(fout, "lev"  , typeof(lev2),   (/"lev"/) )
        filevardef(fout, "lat"  , typeof(lat2),   (/"lat"/) )
        filevardef(fout, "lon"  , typeof(lon2),   (/"lon"/) )
-       ;filevardef(fout,  Varname, typeof(Vout),  dimNames )
        filevardef(fout,  Varout, typeof(Vout),  dimNames )
 
        filevarattdef(fout, "time" , timeout)                  ; copy time attributes
        filevarattdef(fout, "lev"  , lev2)                     ; copy lev attributes
        filevarattdef(fout, "lat"  , lat2)                     ; copy lat attributes
        filevarattdef(fout, "lon"  , lon2)                     ; copy lon attributes
-       ;filevarattdef(fout, Varname, Vout)
        filevarattdef(fout, Varout, Vout)
 
       setfileoption(fout,"DefineMode",False)
@@ -358,7 +356,7 @@ begin
        fout->lev    = (/lev2/)
        fout->lat    = (/lat2/)
        fout->lon    = (/lon2/)
-       fout->$Varname$  = (/Vout/)
+       fout->$Varout$  = (/Vout/)
 
 ;;   print( yearchar )
       delete( indices)
@@ -391,14 +389,12 @@ begin
        filevardef(fout, "lev"  , typeof(lev2),   (/"lev"/) )
        filevardef(fout, "lat"  , typeof(lat2),   (/"lat"/) )
        filevardef(fout, "lon"  , typeof(lon2),   (/"lon"/) )
-       ;filevardef(fout,  Varname, typeof(clima),  dimNames )
        filevardef(fout,  Varout, typeof(clima),  dimNames )
 
        filevarattdef(fout, "time" , timeout)                  ; copy time attributes
        filevarattdef(fout, "lev"  , lev2)                     ; copy lev attributes
        filevarattdef(fout, "lat"  , lat2)                     ; copy lat attributes
        filevarattdef(fout, "lon"  , lon2)                     ; copy lon attributes
-       ;filevarattdef(fout, Varname, clima)
        filevarattdef(fout, Varout, clima)
 
        setfileoption(fout,"DefineMode",False)
@@ -406,7 +402,7 @@ begin
        fout->lev    = (/lev2/)
        fout->lat    = (/lat2/)
        fout->lon    = (/lon2/)
-       fout->$Varname$  = (/clima/)
+       fout->$Varout$  = (/clima/)
 ;;;;
       delete( fout)
       delete( time0)
@@ -454,7 +450,7 @@ begin
 ;;	 conversion - needed for PR
 	ff = 1.
        if( Varname .eq. prv) then
-	  ff = tofloat(pr_conversionv)
+	  ff = tofloat( pr_conversionv)
        end if
 
        ntim  = dimsizes(time0)      ; get dimension sizes
@@ -549,14 +545,13 @@ begin
        filevarattdef(fout, "time" , timeout)                  ; copy time attributes
        filevarattdef(fout, "lat"  , lat2)                     ; copy lat attributes
        filevarattdef(fout, "lon"  , lon2)                     ; copy lon attributes
-       ;filevarattdef(fout, Varname, Vout2)
        filevarattdef(fout, Varout, Vout2)
 
        setfileoption(fout,"DefineMode",False)
        fout->time   = (/timeout/)
        fout->lat    = (/lat2/)
        fout->lon    = (/lon2/)
-       fout->$Varname$  = (/Vout2/)
+       fout->$Varout$  = (/Vout2/)
 
         end do   ;;    over all  years in the data
 
@@ -603,20 +598,18 @@ begin
        filevardef(fout, "time" , typeof(timeout), (/"time"/) )
        filevardef(fout, "lat"  , typeof(lat2),   (/"lat"/) )
        filevardef(fout, "lon"  , typeof(lon2),   (/"lon"/) )
-       ;filevardef(fout,  Varname, typeof(clima),  dimNames2 )
        filevardef(fout,  Varout, typeof(clima),  dimNames2 )
 
        filevarattdef(fout, "time" , timeout)                  ; copy time attributes
        filevarattdef(fout, "lat"  , lat2)                     ; copy lat attributes
        filevarattdef(fout, "lon"  , lon2)                     ; copy lon attributes
-       ;filevarattdef(fout, Varname, clima)
        filevarattdef(fout, Varout, clima)
 
        setfileoption(fout,"DefineMode",False)
        fout->time   = (/timeout/)
        fout->lat    = (/lat2/)
        fout->lon    = (/lon2/)
-       fout->$Varname$  = (/clima/)
+       fout->$Varout$  = (/clima/)
 
       delete( fout)
       delete( time0)

@@ -31,10 +31,10 @@ os.environ["ENSO_MSE"] = "1"
 os.environ["ENSO_MSE_VAR"] = "1"
 os.environ["ENSO_SCATTER"] = "1"
 
-os.environ["slon1"] = 160
-os.environ["slon2"] = 200
-os.environ["slat1"] = -10
-os.environ["slat2"] = 5
+os.environ["slon1"] = "160"
+os.environ["slon2"] = "200"
+os.environ["slat1"] = "-10"
+os.environ["slat2"] = "5"
 
 # Subpackage control variables optionally set in namelist eg. VAR ENSO_COMPOSITE 1
 # nb. OBS isn't really a subpackage but is a switch used by all subpackages
@@ -131,6 +131,12 @@ if os.environ["ENSO_COMPOSITE"] == "1":
         if os.path.isfile( file_dest ):
             os.system("rm -f "+file_dest)
             os.system("cp "+file_src+" "+file_dest)
+
+        file_src  = os.environ["POD_HOME"]+"/ENSO_MSE.pdf"
+        file_dest = os.environ["ENSO_MSE_WKDIR"]+"/ENSO_MSE.pdf"
+        if os.path.isfile( file_dest ):
+            os.system("rm -f "+file_dest)
+        os.system("cp "+file_src+" "+file_dest)
 
         print("=================================================================")
         print("                         COMPOSITES FINISHED                     ")

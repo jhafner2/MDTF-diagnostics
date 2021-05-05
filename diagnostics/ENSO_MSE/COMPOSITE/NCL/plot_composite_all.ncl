@@ -9,7 +9,7 @@
 ; load "$NCARG_ROOT/lib/ncarg/nclscripts/csm/shea_util.ncl"
 ; load "$POD_HOME/shared/gsnColorRange.ncl"
 
-begin 
+begin
 
 ;; select the  cmin, cmax, cint
 ;; select the  cmin, cmax, cint
@@ -24,7 +24,7 @@ begin
               (/ 0.4,   0.4,  10,    4,     4,    1,  10 /)  /)
 
 
-   modes = (/ "ELNINO", "LANINA" /) 
+   modes = (/ "ELNINO", "LANINA" /)
 
    variables = (/ "TS" , "SW", "LW", "LHF", "SHF", "PR", "FRAD"   /)
    varinames = (/ "SST" , "SW~B~net~N", "LW~B~net~N", "LHF", "SHF", "PRECIP", "F~B~rad~N" /)
@@ -32,7 +32,7 @@ begin
    varunits =  (/ "[deg. C]", "[W/m2]", "[W/m2]", "[W/m2]", "[W/m2]", "[mm/day]",  "[W/m2]" /)
 
    title_mode = (/ "El Nino",  "La Nina" /)
-  
+
       outdir2 = getenv("ENSO_MSE_WKDIR") + "/model"
       outdir  = getenv("ENSO_MSE_WKDIR_COMPOSITE") +"/model" ; envvar set in ENSO_MSE.py
       varcode  = getenv("POD_HOME")
@@ -72,7 +72,7 @@ begin
        zdum  = str_get_field(dataxyz(2), 1," ")
        zmax =  stringtointeger( zdum)
 
-;;;  read in the lon/lat plevs here !! 
+;;;  read in the lon/lat plevs here !!
        lon = fbindirread (name_lon, 0, (/ xmax /) , "float")
        lat = fbindirread (name_lat, 0, (/ ymax /) , "float")
        lon@units = "degrees_east"
@@ -83,36 +83,36 @@ begin
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
    do n = 0, 1
-   mode  =  modes(n) 
+   mode  =  modes(n)
 
    do iv = 0, 6
     ff = 1.
     if( iv  .eq. 5) then
        ff = 24. * 60. * 60.
-    end if 
-;;  read  in the data from 
+    end if
+;;  read  in the data from
 
 	namein  = outdir  + "/netCDF/"  + mode
 	nameout = outdir2 + "/PS/composite_"  + mode
 
 ;;      maintitle = "Composite " + title_mode(n)  + " " + varinames(iv)
-;;;   read in various variables then  plot 
-;;    
-     variable = variables(iv) ;;;;  
-     units = varunits(iv) ;;;  
+;;;   read in various variables then  plot
+;;
+     variable = variables(iv) ;;;;
+     units = varunits(iv) ;;;
 
      colormap = "BlueWhiteOrangeRed" ;;   "BlWhRe"  ;;   "BlRe"
      if( iv .eq. 5 ) then
 	 colormap =  "precip4_diff_19lev"
      end if
-;;  the title 
+;;  the title
 
    namein1 = namein + "/" + variable + ".grd"  ;;  str_concat( string)
    namein2 = nameclima +  variable + "_clim.grd"  ;;; str_concat( string)
 
    nameout12 = nameout + "_" + variable
-;;  print( namein1) 
-;;   print( namein2 ) 
+;;  print( namein1)
+;;   print( namein2 )
 ;;   read in the data
      dims = (/  ymax, xmax /)
      datain1 =  new(  dims, "float")
@@ -123,14 +123,14 @@ begin
      datain2  = fbindirread (namein2, 0, dims , "float")
 
 ;;  make the anomaly for plotting
-    
+
     datain =  new(  dims, "float")
      datain!0="lat"
      datain!1="lon"
      datain&lat = lat
      datain&lon = lon
 
-    datain = ff *( datain1  - datain2) 
+    datain = ff *( datain1  - datain2)
 ;;  gsn_range = gsnColorRange(cmin, cmax, cint, ccenter, 97, 49)
 
 ;;   wks_type = "png"
@@ -143,13 +143,13 @@ begin
  res = True
 ;;   res@gsnMaximize  = True                        ; maximize plot in frame
 
-  res@mpMinLonF              =  xlon1 
+  res@mpMinLonF              =  xlon1
   res@mpMaxLonF              =  xlon2
   res@mpCenterLonF           = xcenter     ; This is necessary to get the correct map
 
 
  res@cnFillOn              = True
- res@cnFillMode            = "CellFill"
+ res@cnFillMode            = "AreaFill"
  res@cnLinesOn             = False
  res@cnLevelSelectionMode  = "ManualLevels"
 
@@ -157,10 +157,10 @@ begin
 ;;  res@cnFillPalette        = colormap        ; set color map
   res@cnLinesOn            = False
 
-;;  symMinMaxPlt ( datain, clevs, False,res)  
+;;  symMinMaxPlt ( datain, clevs, False,res)
  res@cnMinLevelValF        = cmin(n, iv)
  res@cnMaxLevelValF        = cmax(n, iv)
- res@cnLevelSpacingF       = cint(n, iv) 
+ res@cnLevelSpacingF       = cint(n, iv)
 
  res@gsnMaximize         = True
 ; res@gsnSpreadColors     = True
@@ -168,7 +168,7 @@ begin
 ; res@gsnSpreadColorEnd   = gsn_range@ColorEnd
 ; res@lbLabelStride       = 2
 
-;;  title 
+;;  title
   res@tiMainFontHeightF = 0.025
   res@tiMainFont = "helvetica"
 
@@ -189,7 +189,7 @@ begin
       label2 = title_mode(n) + "  (" + season + ")"
       xs1 = xs1 + dx2
       gsn_text_ndc (wks, label2, xs1, ys1, txres1)
- 
+
 
 ;;   gsn_define_colormap(wks,  colormap)
 ;;   plot = gsn_csm_contour_map(wks, datain, res)
@@ -209,11 +209,11 @@ begin
      dx2 = 0.3
        label4 = "  Months/Season= " + season + " Model: " + model + "  units:" +  units
      gsn_text_ndc (wks, label4, xs1, ys1, txres2)
-;;;;;    
+;;;;;
 	plot = gsn_csm_contour_map(wks, datain, res)
 
-;;  frame(wks)      
-   
+;;  frame(wks)
+
   end do  ;  over variables
 
   end do  ;  over modes

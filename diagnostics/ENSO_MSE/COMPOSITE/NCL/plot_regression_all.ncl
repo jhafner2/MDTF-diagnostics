@@ -9,21 +9,21 @@
 ; load "$NCARG_ROOT/lib/ncarg/nclscripts/csm/shea_util.ncl"
 ; load "$POD_HOME/shared/gsnColorRange.ncl"
 
-begin 
+begin
 
 
    cmin = (/  -2.8,  -2.4, -22.5, -18,  -12 /) ; min(datain)
    cmax = (/   2.8,   2.4,  22.5,  18,   12 /) ; max(datain)
    cint = (/   0.4,   0.4,  2.5,    2,    2 /)
    ccenter = 0
-  
+
 
    variables = (/ "PR" , "SW", "LW", "LHF", "SHF" /)
    varinames = (/ "PRECIP" , "SW~B~net~N", "LW~B~net~N", "LHF", "SHF" /)
    varunits =  (/ "[mm/day]/[deg. C]", "[W/m2]/[deg. C]", "[W/m2]/[deg. C]", "[W/m2]/[deg. C]", "[W/m2]/[deg. C]"  /)
 
 
-;;  read  in the data from 
+;;  read  in the data from
 
       varcode  = getenv("POD_HOME")
       outdir  = getenv("ENSO_MSE_WKDIR_COMPOSITE") +"/model/" ; envvar set in ENSO_MSE.py
@@ -36,9 +36,9 @@ begin
       name_lat = outdir + "/netCDF/DATA/latitude.out"
       name_plevs = outdir + "/netCDF/DATA/plevels.out"
 
-      namein = outdir + "/netCDF/"  
-      nameout = outdir2 +  "/PS/regression" 
-	 
+      namein = outdir + "/netCDF/"
+      nameout = outdir2 +  "/PS/regression"
+
       maintitle = "NINO3.4 SST on "
 
       xlon1 = 0
@@ -68,19 +68,19 @@ begin
        lat@units = "degrees_north"
        lat@long_name = "lat"
 
-;;;   read in various variables then  plot 
-;;   
+;;;   read in various variables then  plot
+;;
      do iv = 0, 4
-     variable = variables(iv) ;;;;    
+     variable = variables(iv) ;;;;
      units = varunits(iv)
 
      colormap = "BlueWhiteOrangeRed" ;;   "BlWhRe"  ;;   "BlRe"
-;;  the title 
+;;  the title
 
      namein1 = namein + "/REGRESS_" + variable + ".grd"  ;;  str_concat( string)
      nameout12 = nameout + "_" + variable
 
- 
+
 ;;   read in the data
      dims = (/  ymax, xmax /)
      datain1 =  new(  dims, "float")
@@ -92,7 +92,7 @@ begin
        datain1!0="lat"
  	datain1!1="lon"
 	datain1&lat = lat
-	datain1&lon = lon 
+	datain1&lon = lon
 
    wks_type = "eps"
    wks = gsn_open_wks( wks_type, nameout12)
@@ -100,13 +100,13 @@ begin
 
  res = True
 
-  res@mpMinLonF              =  xlon1 
+  res@mpMinLonF              =  xlon1
   res@mpMaxLonF              =  xlon2
   res@mpCenterLonF           = xcenter     ; This is necessary to get the correct map
   res@txFuncCode    = "~"
 
  res@cnFillOn              = True
- res@cnFillMode            = "CellFill"
+ res@cnFillMode            = "AreaFill"
  res@cnLinesOn             = False
  res@cnLevelSelectionMode  = "ManualLevels"
 
@@ -119,11 +119,11 @@ begin
 
  res@gsnMaximize         = True
 
-;;  title 
+;;  title
   res@tiMainFontHeightF = 0.025
   res@tiMainFont = "helvetica"
 
-;;  legend title 
+;;  legend title
       txres1 = True
       txres1@txFontColor =  "black"
       txres1@txFont   = "helvetica"
